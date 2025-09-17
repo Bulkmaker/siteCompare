@@ -1,0 +1,360 @@
+/* UI: тогглы, счётчик, иконки ✓ ✕; фикс-хедер/сортировка/обрезка пути — сохранены */
+:root
+  --bg: #0f1216
+  --card: #161b22
+  --text: #e6edf3
+  --muted: #9aa7b2
+  --accent: #1f6feb
+  --row-alt: #0d1117
+  --border: #202938
+  --thead: #0d131c
+  --ok: #2ba642
+  --bad: #e5534b
+
+*
+  box-sizing: border-box
+
+body
+  margin: 0
+  font: 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif
+  color: var(--text)
+  background: var(--bg)
+
+.container
+  width: min(1200px, 94vw)
+  margin: 0 auto
+  padding: 16px
+
+.hdr
+  border-bottom: 1px solid var(--border)
+  background: #0b0e13
+
+.hdr__top
+  display: flex
+  align-items: flex-start
+  justify-content: space-between
+  gap: 16px
+  flex-wrap: wrap
+
+.hdr__titles
+  flex: 1 1 260px
+
+.hdr__actions
+  display: flex
+  align-items: center
+  gap: 12px
+  justify-content: flex-end
+  min-width: 220px
+
+.crawl-progress
+  display: flex
+  align-items: center
+  gap: 10px
+  min-width: 200px
+
+.crawl-progress__track
+  position: relative
+  flex: 1 1 140px
+  height: 6px
+  border-radius: 999px
+  background: #202938
+  overflow: hidden
+
+.crawl-progress__bar
+  position: absolute
+  inset: 0
+  width: 0%
+  background: var(--accent)
+  transition: width .3s ease
+
+.crawl-progress__label
+  font-size: 12px
+  color: var(--muted)
+
+.crawl-progress--error .crawl-progress__bar
+  background: var(--bad)
+
+h1
+  margin: 0 0 6px
+
+#meta
+  color: var(--muted)
+  font-size: 12px
+
+/* ===== фильтры/тогглы/счётчик ===== */
+.filters
+  margin-top: 10px
+  display: grid
+  grid-template-columns: 1fr
+  gap: 10px
+
+  input
+    background: var(--card)
+    border: 1px solid #263144
+    color: var(--text)
+    padding: 8px 10px
+    border-radius: 10px
+
+.toggles
+  display: flex
+  flex-wrap: wrap
+  gap: 8px
+
+.chip
+  padding: 6px 10px
+  border-radius: 999px
+  border: 1px solid var(--border)
+  background: var(--card)
+  color: var(--muted)
+  cursor: pointer
+  user-select: none
+  transition: transform .06s ease, background .2s ease, border-color .2s ease, color .2s ease
+  &:hover
+    transform: translateY(-1px)
+  &.active
+    border-color: var(--accent)
+    color: #fff
+    background: #0f1d34
+
+.count
+  color: var(--muted)
+  font-size: 12px
+
+/* ===== таблица ===== */
+.table-wrap
+  margin-top: 12px
+  background: var(--card)
+  border: 1px solid var(--border)
+  border-radius: 14px
+  box-shadow: 0 6px 30px rgba(0,0,0,.25)
+  max-height: 75vh
+  overflow-y: auto
+  overflow-x: hidden
+
+table.grid
+  width: 100%
+  border-collapse: separate
+  border-spacing: 0
+  table-layout: fixed
+
+  th, td
+    padding: 10px 12px
+    border-bottom: 1px solid var(--border)
+    white-space: nowrap
+    vertical-align: top
+
+  th:first-child, td:first-child
+    width: 32px
+    max-width: 32px
+    padding-left: 8px
+    padding-right: 8px
+    text-align: center
+
+  /* Вторая колонка (Путь) — обрезка текста */
+  th:nth-child(2), td:nth-child(2)
+    width: 44%
+    max-width: 0
+    overflow: hidden
+    text-overflow: ellipsis
+
+  td:nth-child(2) a.path-link
+    display: block
+    color: #c9d1d9
+    text-decoration: none
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+    &:hover
+      text-decoration: underline
+      color: #e6edf3
+  th:last-child, td:last-child
+    text-align: center
+    width: 48px
+    max-width: 48px
+
+  td .refresh-btn
+    padding: 2px 6px
+    border: none
+    background: transparent
+    color: var(--accent)
+    cursor: pointer
+    font-size: 16px
+    line-height: 1
+    &:hover
+      color: #357dec
+  thead
+    th
+      position: sticky
+      top: 0
+      z-index: 2
+      background: var(--thead)
+      font-weight: 600
+      text-align: left
+      box-shadow: 0 2px 0 var(--border)
+
+      &.sortable
+        cursor: pointer
+        user-select: none
+        transition: background .15s ease
+        &:hover
+          background: #101827
+        &::after
+          content: ' ⇅'
+          opacity: .45
+          font-size: 12px
+        &.sort-asc::after
+          content: ' ▲'
+          opacity: .9
+        &.sort-desc::after
+          content: ' ▼'
+          opacity: .9
+
+  tbody
+    tr
+      &:nth-child(odd)
+        background: var(--row-alt)
+      &:hover
+        background: #111827
+    tr.resolved
+      background: rgba(43, 166, 66, 0.20)
+      &:hover
+        background: rgba(43, 166, 66, 0.30)
+  .mono
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+
+/* красивые ✓ ✕ */
+.ico
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 20px
+  height: 20px
+  border-radius: 999px
+  border: 1px solid currentColor
+  font-size: 14px
+  line-height: 1
+  transform: translateY(1px)
+
+.ico.ok
+  color: var(--ok)
+  background: rgba(43, 166, 66, .18)
+
+.ico.bad
+  color: var(--bad)
+  background: rgba(229, 83, 75, .18)
+
+.ico.empty
+  color: var(--muted)
+  background: rgba(154, 167, 178, .16)
+
+.ico.new-only
+  color: var(--accent)
+  background: rgba(31, 111, 235, .18)
+
+/* прочее (viewer остаётся как был) */
+.hint
+  color: var(--muted)
+  font-size: 12px
+  padding: 12px
+
+.viewer
+  margin-top: 16px
+  padding: 12px
+  background: var(--card)
+  border: 1px solid var(--border)
+  border-radius: 14px
+
+.viewer__head
+  display: flex
+  align-items: center
+  justify-content: space-between
+  margin-bottom: 10px
+
+.btn
+  background: var(--accent)
+  border: none
+  color: white
+  padding: 8px 12px
+  border-radius: 10px
+  cursor: pointer
+
+.btn:disabled
+  opacity: .5
+  cursor: not-allowed
+
+.btn--ghost
+  background: transparent
+  border: 1px solid var(--border)
+  color: var(--text)
+  transition: background .2s ease
+  &:hover
+    background: rgba(31, 111, 235, 0.12)
+  &:disabled
+    background: transparent
+
+.viewer__frames
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 8px
+  iframe
+    width: 100%
+    height: 70vh
+    border: 1px solid var(--border)
+    border-radius: 10px
+    background: #0b0e13
+
+.viewer__shots
+  margin-top: 12px
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr
+  gap: 8px
+  img
+    width: 100%
+    border: 1px solid var(--border)
+    border-radius: 10px
+/* плашка статуса в таблице */
+.pill
+  display: inline-block
+  padding: 2px 6px
+  border-radius: 999px
+  font-size: 12px
+  border: 1px solid #2f3a4d
+  background: #101827
+  color: #cbd5e1
+  vertical-align: middle
+  margin-left: 6px
+  white-space: nowrap
+
+.pill a
+  color: #9cc1ff
+  text-decoration: none
+  &:hover
+    text-decoration: underline
+/* всплывающая подсказка */
+/* всплывающая подсказка */
+.tooltip
+  position: fixed
+  z-index: 9999
+  background: #1e2530
+  color: #ffffff
+  padding: 6px 8px
+  border-radius: 6px
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4)
+  font-size: 14px
+  line-height: 1.4
+  max-width: 300px
+  pointer-events: none
+  white-space: pre-wrap
+
+  .old
+    display: block
+    background: #22334a
+    padding: 4px 6px
+    margin-bottom: 4px
+    font-weight: 600
+
+  .new
+    display: block
+    background: #152b3e
+    padding: 4px 6px
+    font-weight: 600

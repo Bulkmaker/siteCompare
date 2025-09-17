@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Сравнение сайтов</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <header class="hdr">
+    <div class="container">
+      <div class="hdr__top">
+        <div class="hdr__titles">
+          <h1>Сравнение старой и новой версии</h1>
+          <div id="meta"></div>
+        </div>
+        <div class="hdr__actions">
+          <button id="crawlStartBtn" class="btn btn--ghost" type="button">Обновить crawl</button>
+          <div id="crawlProgress" class="crawl-progress" hidden>
+            <div class="crawl-progress__track">
+              <div class="crawl-progress__bar"></div>
+            </div>
+            <span class="crawl-progress__label"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filters">
+        <input id="filterInput" placeholder="Фильтр по пути или заголовку" />
+
+        <div class="toggles">
+          <button id="tglMatches" class="chip active" type="button">Показывать совпадения</button>
+          <button id="tgl404" class="chip active" type="button">Показывать 404</button>
+          <button id="tglDiffs" class="chip active" type="button">Показывать несовпадения</button>
+          <button id="tglR301Cons" class="chip active" type="button">Показывать 301→консолидацию</button>
+        </div>
+
+
+        <div id="selCount" class="count">Выбрано: —</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="table-wrap">
+      <table id="resultTable" class="grid">
+        <thead>
+          <tr>
+            <th></th> <!-- чекбокс -->
+            <th>Путь</th>
+            <th>Статус (OLD → NEW)</th>
+            <th>H1</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>↻</th> <!-- новый столбец -->
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p class="hint">Клик по адресу — откроется NEW, Ctrl/Cmd+клик — OLD (в новой вкладке).</p>
+    </div>
+
+    <section id="viewer" class="viewer" hidden>
+      <div class="viewer__head">
+        <h2 id="vPath"></h2>
+        <button id="vClose" class="btn">Закрыть</button>
+      </div>
+      <div id="vIframes" class="viewer__frames"></div>
+      <div id="vShots" class="viewer__shots"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="tooltip.js"></script>
+</body>
+
+</html>

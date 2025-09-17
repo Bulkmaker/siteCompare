@@ -1,0 +1,10 @@
+{
+  "OLD_BASE": "https://old.example.com",
+  "NEW_BASE": "https://new.example.com",
+  "START_PATHS": ["/"],
+  "MAX_PAGES": 500,
+  "SAME_PATH_ONLY": true,
+  "IGNORE_QUERY": true,
+  "TIMEOUT_MS": 15000,
+  "RESPECT_ROBOTS": false
+}

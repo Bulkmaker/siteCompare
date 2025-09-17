@@ -1,0 +1,28 @@
+{
+  "name": "site-compare",
+  "version": "1.0.0",
+  "description": "Сервис для сравнения двух версий сайта: ссылки, заголовки и визуальные отличия",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "crawl": "node src/crawl.js",
+    "snap": "node src/screenshot.js",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+ 
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "express": "^4.19.2",
+    "pixelmatch": "^5.3.0",
+    "pngjs": "^7.0.0",
+    "playwright": "^1.47.0",
+    "sass": "^1.77.0",
+    "fast-xml-parser": "^4.3.2"
+  },
+ 
+
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
